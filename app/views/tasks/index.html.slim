@@ -1,0 +1,12 @@
+.container
+  .row
+    .col
+      h1 Tasks
+      == render "form"
+      / = ActionView::PartialRenderer
+  #tasks.row
+    - Task.states.keys.each do |key|
+      .col id="#{key}_tasks"
+        h4 = key.humanize
+        - @tasks[key].each do |task|
+          == render task

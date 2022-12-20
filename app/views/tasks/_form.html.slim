@@ -1,0 +1,13 @@
+.row.mb-3
+  .col-6
+    = form_with(model: @task) do |form|
+      = form.hidden_field :owner_id, value: current_user.id
+
+      .row
+        .col-6
+          = form.text_field :title, class: "form-control"
+
+        .col-3
+          = form.datetime_field :deadline, class: "form-control"
+        .col-3
+          = form.submit class: "btn btn-outline-primary"

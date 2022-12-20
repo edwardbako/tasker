@@ -4,7 +4,7 @@ nav.navbar.navbar-expand
         - if user_signed_in?
             ul.navbar-nav.me-auto
                 li.nav-item
-                    = link_to "Board", nil, class: "nav-link"
+                    = link_to "Board", tasks_path, class: "nav-link"
 
             ul.navbar-nav
                 li.nav-item
