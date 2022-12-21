@@ -1,3 +1,14 @@
+@import "bootstrap/scss/variables";
+
+.field_with_errors {
+    .form-control {
+        border-color: $danger;
+    }
+    .control-label {
+        color: $danger;
+    }
+}
+
 #notice {
     position: absolute;
     width: 100%;
@@ -6,5 +17,6 @@
 }
 
 .task:hover {
-    border-color: black;
+    border-color: $warning;
+    box-shadow: 1px 1px 1px $secondary;
 }
