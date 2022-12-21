@@ -6,6 +6,7 @@ class Task < ApplicationRecord
   enum state: [:newest, :in_progress, :completed, :canceled]
 
   validates_presence_of :title, :deadline
+  validates_with CompletionValidator
 
   before_create :set_newest
   before_update :set_timestamps, if: :timestampable
@@ -14,7 +15,6 @@ class Task < ApplicationRecord
   def set_timestamps
     send("set_#{state}_at")
   end
-
   def timestampable
     state.to_sym.in? self.class.timestampable_states
   end
