@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @task = Task.new
-    @tasks = Task.states.keys.to_h { |key| [key, Task.includes(:owner).send(key).order(:deadline)] }
+    set_tasks
   end
 
   # POST /tasks or /tasks.json
@@ -13,10 +13,11 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
+        format.html { redirect_to tasks_url, notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        set_tasks
+        format.html { render :index, status: :unprocessable_entity }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -49,6 +50,10 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def set_tasks
+      @tasks = Task.states.keys.to_h { |key| [key, Task.includes(:owner).send(key).order(:deadline)] }
     end
     # Only allow a list of trusted parameters through.
     def task_params

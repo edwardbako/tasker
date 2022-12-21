@@ -19,15 +19,18 @@ div.card.m-1.task id="#{dom_id task}"
           = task.deadline.to_formatted_s(:short_date)
       .col.text-end
         - if task.newest?
-          = link_to task, class: "btn btn-outline-danger" do
+          = link_to task, data: { 'turbo-method': :delete }, class: "btn btn-sm btn-outline-danger" do
+            i.bi.bi-trash
+          '
+          = link_to task, class: "btn btn-sm btn-outline-dark" do
             ' Start
             i.bi.bi-arrow-bar-right
 
         - if task.in_progress?
-          = link_to task, class: "btn btn-outline-secondary" do
+          = link_to task, class: "btn btn-sm btn-outline-secondary" do
             i.bi.bi-x
           '
-          = link_to task, class: "btn btn-outline-success rounded-5" do
+          = link_to task, class: "btn btn-sm btn-outline-success rounded-5" do
             i.bi.bi-check
 
         - if task.completed?

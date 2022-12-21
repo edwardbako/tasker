@@ -10,7 +10,7 @@
           br
           = f.email_field :email, autofocus: true, autocomplete: "email"
         .field.mb-3
-          = f.label :password, class: 'form-label'
+          = f.label :password
           br
           = f.password_field :password, autocomplete: "current-password"
         - if devise_mapping.rememberable?

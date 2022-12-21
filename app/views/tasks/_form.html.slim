@@ -1,13 +1,17 @@
 .row.mb-3
-  .col-6
-    = form_with(model: @task) do |form|
+  .col-8
+    = form_with(model: @task, builder: CustomFormBuilder) do |form|
       = form.hidden_field :owner_id, value: current_user.id
 
       .row
         .col-6
-          = form.text_field :title, class: "form-control"
+          = form.error_label :title
+          = form.text_field :title, autofocus: true
 
         .col-3
-          = form.datetime_field :deadline, class: "form-control"
+          = form.error_label :deadline
+          = form.date_field :deadline, min: Date.today,
+                  value: (@task.deadline.present? ? @task.deadline.to_date : Date.today)
         .col-3
+          = form.error_label :submit
           = form.submit class: "btn btn-outline-primary"

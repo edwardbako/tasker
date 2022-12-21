@@ -13,7 +13,14 @@
     position: absolute;
     width: 100%;
     z-index: 10000;
-    opacity: 90%;
+    opacity: 100%;
+
+    &.hidden {
+        visibility: hidden;
+        opacity: 30%;
+        transition: visibility 5s, opacity 10s;
+
+    }
 }
 
 .task:hover {

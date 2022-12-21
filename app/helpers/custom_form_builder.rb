@@ -19,7 +19,7 @@ class CustomFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def check_box(method, options = {})
-    super(method, options.merge({class: ' form-check-input'}){|k, n, o| n + o}) + ' ' + label(method, class: 'form-check-label')
+    super(method, options.merge({class: ' form-check-input'}){|k, n, o| n + o}) + ' ' + label(method, nil, class: 'form-check-label')
   end
 
   def merged_options(options)
