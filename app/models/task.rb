@@ -6,10 +6,27 @@ class Task < ApplicationRecord
   validates_presence_of :title, :deadline
 
   before_create :set_newest
+  before_update :set_timestamps, if: :timestampable
 
   private
+  def set_timestamps
+    send("set_#{state}_at")
+  end
 
+  def timestampable
+    state.to_sym.in? self.class.timestampable_states
+  end
   def set_newest
     self.state = :newest
+  end
+
+  def self.timestampable_states
+    [:completed, :canceled]
+  end
+
+  timestampable_states.each do |m|
+    define_method("set_#{m}_at") do
+      self.send("#{m}_at=", Time.now)
+    end
   end
 end

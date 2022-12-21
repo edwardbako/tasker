@@ -1,6 +1,8 @@
 = link_to task, data: { 'turbo-method': :delete }, class: "btn btn-sm btn-outline-danger" do
   i.bi.bi-trash
 '
-= link_to task, class: "btn btn-sm btn-outline-dark" do
+= button_to task, params: {task: {state: :in_progress}}, method: :patch,
+        form_class: "form-inline",
+        class: "btn btn-sm btn-outline-dark" do
   ' Start
   i.bi.bi-arrow-bar-right

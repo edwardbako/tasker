@@ -1,5 +1,9 @@
-= link_to task, class: "btn btn-sm btn-outline-secondary" do
+= button_to task, params: {task: {state: :canceled}}, method: :patch,
+        form_class: "form-inline",
+        class: "btn btn-sm btn-outline-secondary" do
   i.bi.bi-x
 '
-= link_to task, class: "btn btn-sm btn-outline-success rounded-5" do
+= button_to task, params: {task: {state: :completed}}, method: :patch,
+        form_class: "form-inline",
+        class: "btn btn-sm btn-outline-success rounded-5" do
   i.bi.bi-check

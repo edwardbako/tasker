@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @task = Task.new
+    set_new_task
     set_tasks
   end
 
@@ -26,19 +26,21 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
+      if @updatable_task.update(task_params)
+        format.html { redirect_to tasks_url, notice: "Task was successfully updated." }
+        format.json { render :show, status: :ok, location: @updatable_task }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        set_new_task
+        set_tasks
+        format.html { render :index, status: :unprocessable_entity }
+        format.json { render json: @updatable_task.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
-    @task.destroy
+    @updatable_task.destroy
 
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
@@ -49,7 +51,11 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @updatable_task = Task.find(params[:id])
+    end
+
+    def set_new_task
+      @task = Task.new
     end
 
     def set_tasks
