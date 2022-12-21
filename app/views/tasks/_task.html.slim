@@ -4,13 +4,8 @@ div.card.m-1.task id="#{dom_id task}"
       b= task.title
       br
 
-      - if task.in_progress? or task.completed? or task.canceled?
-        small
-          u approved by:
-          br
-          ' John Smith
-          br
-          ' Jane Doe
+      - unless task.newest?
+        = render partial: "approved", object: task, as: :task
 
     .row.align-items-end
       .col
@@ -19,28 +14,10 @@ div.card.m-1.task id="#{dom_id task}"
           = task.deadline.to_formatted_s(:short_date)
       .col.text-end
         - if task.newest?
-          = link_to task, data: { 'turbo-method': :delete }, class: "btn btn-sm btn-outline-danger" do
-            i.bi.bi-trash
-          '
-          = link_to task, class: "btn btn-sm btn-outline-dark" do
-            ' Start
-            i.bi.bi-arrow-bar-right
-
+          = render partial: "newest", object: task, as: :task
         - if task.in_progress?
-          = link_to task, class: "btn btn-sm btn-outline-secondary" do
-            i.bi.bi-x
-          '
-          = link_to task, class: "btn btn-sm btn-outline-success rounded-5" do
-            i.bi.bi-check
-
+          = render partial: "in_progress", object: task, as: :task
         - if task.completed?
-          small
-            ' Completed at
-            br
-            = task.completed_at.to_formatted_s(:short_date)
-
+          = render partial: "completed", object: task, as: :task
         - if task.canceled?
-          small
-            ' Canceled at
-            br
-            = task.canceled_at.to_formatted_s(:short_date)
+          = render partial: "canceled", object: task, as: :task
