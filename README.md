@@ -16,7 +16,7 @@ sudo apt-get update
 sudo apt-get install git curl build-essential zlib1g-dev libyaml-dev libssl-dev libpq-dev libreadline-dev
 ```
 ***
-## install Ruby
+## Install Ruby
 Use [rbenv](https://github.com/rbenv/rbenv) and [ruby-build](https://github.com/rbenv/ruby-build#readme) to install Ruby. We always require the latest ruby versions, and you can check which version is required by checking the Gemfile for the `ruby "~> X.Y"` statement. At the time of writing, this version is “3.1.2”
 
 ### Install rbenv and ruby-build
@@ -153,6 +153,10 @@ vim config/database.yml
 ```
 Now edit the database credentials.
 ```shell
+# Create master.key file for encription
+vim config/master.key
+
+# And setup credentials
 rails credentials:edit
 ```
 It should look like this (just with your database name, username, and password):
