@@ -1,0 +1,5 @@
+/ = button_to user_task_path(task.owner, task), params: {task: {state: :completed}}, method: :patch,
+/         form_class: "form-inline",
+/         class: "btn btn-sm btn-outline-success rounded-5" do
+' Approve
+i.bi.bi-check

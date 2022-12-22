@@ -1,0 +1,15 @@
+.container
+  .row
+    .col
+      h1
+        ' Tasks
+        small for approval
+      h5 Choose user
+      #users.row
+        .col-2
+          - @users.each do |user|
+            = link_to user.email, user, class: ( "link-success" if user == @user )
+            br
+        .col-4
+          - if @user.present?
+            = render @user.tasks.in_progress, updatable: nil

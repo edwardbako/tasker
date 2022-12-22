@@ -1,13 +1,9 @@
 class CompletionValidator < ActiveModel::Validator
+  MINIMUM_ALLOWED_APPROVERS = 2
   def validate(record)
-    if record.completed? && record.approvers.size < minimum_allowed_approvers
-      record.errors.add :base, "Task must be approved by #{minimum_allowed_approvers} users minimum"
+    if record.completed? && record.approvers.size < MINIMUM_ALLOWED_APPROVERS
+      record.errors.add :base, "Task must be approved by #{MINIMUM_ALLOWED_APPROVERS} users minimum"
     end
   end
 
-  private
-
-  def minimum_allowed_approvers
-    2
-  end
 end

@@ -1,6 +1,6 @@
 small
   u approved by:
   br
-  ' John Smith
-  br
-  ' Jane Doe
+  - task.approvers.each do |user|
+    = user.email
+    br

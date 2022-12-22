@@ -1,7 +1,7 @@
 .row.mb-3
   .col-8
     = form_with(model: @task, builder: CustomFormBuilder) do |form|
-      = form.hidden_field :owner_id, value: current_user.id
+      = form.hidden_field :owner_id, value: @task.owner.id
 
       .row
         .col-6

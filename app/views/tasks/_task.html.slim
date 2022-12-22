@@ -1,11 +1,16 @@
 div.card.m-1.task id="#{dom_id task}"
   .card-body
-    p
-      b= task.title
-      br
+    .row
+      .col
+        p
+          b= task.title
+          br
+          - unless task.newest?
+            = render partial: "tasks/approved", object: task, as: :task
+      .col-2.text-end.text-success
+        - if task.approved?
+          i.bi.bi-check-all
 
-      - unless task.newest?
-        = render partial: "approved", object: task, as: :task
 
     .row.align-items-end
       .col
@@ -13,14 +18,18 @@ div.card.m-1.task id="#{dom_id task}"
           ' Due:
           = task.deadline.to_formatted_s(:short_date)
       .col.text-end
-        - if task.newest?
-          = render partial: "newest", object: task, as: :task
-        - if task.in_progress?
-          = render partial: "in_progress", object: task, as: :task
-        - if task.completed?
-          = render partial: "completed", object: task, as: :task
-        - if task.canceled?
-          = render partial: "canceled", object: task, as: :task
+        - if task.owner == current_user
+          - if task.newest?
+            = render partial: "tasks/newest", object: task, as: :task
+          - if task.in_progress?
+            = render partial: "tasks/in_progress", object: task, as: :task
+          - if task.completed?
+            = render partial: "tasks/completed", object: task, as: :task
+          - if task.canceled?
+            = render partial: "tasks/canceled", object: task, as: :task
+        - else
+          = render partial: "tasks/approvement", object: task, as: :task
+
 
     - if updatable.present? && updatable.errors.any? && task.id == updatable.id
       .row

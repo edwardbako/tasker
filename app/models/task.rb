@@ -11,6 +11,9 @@ class Task < ApplicationRecord
   before_create :set_newest
   before_update :set_timestamps, if: :timestampable
 
+  def approved?
+    approvers.size >= CompletionValidator::MINIMUM_ALLOWED_APPROVERS
+  end
   private
   def set_timestamps
     send("set_#{state}_at")

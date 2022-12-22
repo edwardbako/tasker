@@ -55,11 +55,13 @@ class TasksController < ApplicationController
     end
 
     def set_new_task
-      @task = Task.new
+      @task = Task.new(owner: current_user)
     end
 
     def set_tasks
-      @tasks = Task.states.keys.to_h { |key| [key, Task.includes(:owner).send(key).order(:deadline)] }
+      @tasks = Task.states.keys.to_h do |key|
+        [key, Task.includes(:owner, :approvements, :approvers).where(owner: current_user).send(key).order(:deadline)]
+      end
     end
     # Only allow a list of trusted parameters through.
     def task_params
