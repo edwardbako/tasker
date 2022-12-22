@@ -33,5 +33,5 @@ div.card.m-1.task id="#{dom_id task}"
 
     - if updatable.present? && updatable.errors.any? && task.id == updatable.id
       .row
-        .col
-          = updatable.errors.full_messages.join(", ")
+        .col.field_with_errors
+          .control-label = updatable.errors.full_messages.join(", ")

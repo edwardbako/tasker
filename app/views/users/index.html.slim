@@ -12,4 +12,4 @@
             br
         .col-4
           - if @user.present?
-            = render @user.tasks.in_progress, updatable: nil
+            = render @tasks, updatable: nil

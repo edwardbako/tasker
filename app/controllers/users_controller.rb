@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks.includes(:owner, :approvers).in_progress
     set_users
     render :index
   end

@@ -1,5 +1,12 @@
-/ = button_to user_task_path(task.owner, task), params: {task: {state: :completed}}, method: :patch,
-/         form_class: "form-inline",
-/         class: "btn btn-sm btn-outline-success rounded-5" do
-' Approve
-i.bi.bi-check
+- if current_user.in? task.approvers
+  .btn.btn-sm.btn-success.disabled.rounded-5
+    ' APPROVED
+    i.bi.bi-check-all
+-else
+  = button_to approvements_path,
+          params: {approvement: {task_id: task}},
+          method: :post,
+          form_class: "form-inline",
+          class: "btn btn-sm btn-outline-success rounded-5" do
+    ' Approve
+    i.bi.bi-check
