@@ -2,7 +2,9 @@ require "test_helper"
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @task = tasks(:one)
+    @task = create :task
+    @user = create :user
+    sign_in(@user)
   end
 
   test "should get index" do
@@ -10,32 +12,18 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get new" do
-    get new_task_url
-    assert_response :success
-  end
-
   test "should create task" do
     assert_difference("Task.count") do
-      post tasks_url, params: { task: { canceled_at: @task.canceled_at, completed_at: @task.completed_at, deadline: @task.deadline, owner_id: @task.owner_id, state: @task.state, title: @task.title } }
+      post tasks_url, params: { task: { deadline: @task.deadline, owner_id: @task.owner_id, title: @task.title } }
     end
 
-    assert_redirected_to task_url(Task.last)
+    assert_redirected_to tasks_url
   end
 
-  test "should show task" do
-    get task_url(@task)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_task_url(@task)
-    assert_response :success
-  end
 
   test "should update task" do
-    patch task_url(@task), params: { task: { canceled_at: @task.canceled_at, completed_at: @task.completed_at, deadline: @task.deadline, owner_id: @task.owner_id, state: @task.state, title: @task.title } }
-    assert_redirected_to task_url(@task)
+    patch task_url(@task), params: { task: { state: :in_progress } }
+    assert_redirected_to tasks_url
   end
 
   test "should destroy task" do
