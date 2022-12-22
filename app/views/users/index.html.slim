@@ -5,11 +5,11 @@
         ' Tasks
         small for approval
       h5 Choose user
-      #users.row
-        .col-2
+      .row
+        .col-2.users
           - @users.each do |user|
             = link_to user.email, user, class: ( "link-success" if user == @user )
             br
-        .col-4
+        .col-4.tasks
           - if @user.present?
             = render @tasks, updatable: nil
