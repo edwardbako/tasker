@@ -7,6 +7,7 @@ class Task < ApplicationRecord
 
   validates_presence_of :title, :deadline, :owner
   validates_with CompletionValidator
+  validates_with TransitionsValidator, on: :update
 
   before_create :set_newest
   before_update :set_timestamps, if: :timestampable
