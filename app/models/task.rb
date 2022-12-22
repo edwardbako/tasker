@@ -1,11 +1,11 @@
 class Task < ApplicationRecord
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
   has_many :approvements, dependent: :destroy
   has_many :approvers, through: :approvements, source: :user
 
   enum state: [:newest, :in_progress, :completed, :canceled]
 
-  validates_presence_of :title, :deadline
+  validates_presence_of :title, :deadline, :owner
   validates_with CompletionValidator
 
   before_create :set_newest
