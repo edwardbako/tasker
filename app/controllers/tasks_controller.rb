@@ -3,8 +3,10 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    set_new_task
-    set_tasks
+    respond_to do |format|
+      format.html { set_new_task; set_tasks }
+      format.json { @tasks = Task.where(state: state_param) }
+    end
   end
 
   # POST /tasks or /tasks.json
@@ -66,5 +68,9 @@ class TasksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :state, :deadline, :owner_id)
+    end
+
+    def state_param
+      params.permit(states: [])[:states]
     end
 end
