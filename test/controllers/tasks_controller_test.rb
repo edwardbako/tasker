@@ -19,6 +19,12 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should return JSON array of all tasks to blank query given" do
+    get tasks_url format: :json
+
+    assert_equal 1, response.parsed_body.size
+  end
+
   test "should create task" do
     assert_difference("Task.count") do
       post tasks_url, params: { task: { deadline: @task.deadline, owner_id: @task.owner_id, title: @task.title } }

@@ -71,6 +71,6 @@ class TasksController < ApplicationController
     end
 
     def state_param
-      params.permit(states: [])[:states]
+      params.permit(states: []).fetch(:states, Task.states.keys)
     end
 end
