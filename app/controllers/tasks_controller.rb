@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_url, notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
+        format.json { render @task, status: :created, location: @task }
       else
         set_tasks
         format.html { render :index, status: :unprocessable_entity }
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @updatable_task.update(task_params)
         format.html { redirect_to tasks_url, notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @updatable_task }
+        format.json { render @updatable_task, status: :ok, location: @updatable_task }
       else
         set_new_task
         set_tasks

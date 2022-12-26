@@ -15,14 +15,23 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   test "should return JSON array to API request" do
     get tasks_url params: { states: [:newest] }, format: :json
 
-    assert_equal @task.id, response.parsed_body.first["id"]
     assert_response :success
+    assert_equal @task.id, response.parsed_body.first["id"]
   end
 
   test "should return JSON array of all tasks to blank query given" do
     get tasks_url format: :json
 
+    assert_response :success
     assert_equal 1, response.parsed_body.size
+  end
+
+  test "should return JSON of created task" do
+    title = "CREATE"
+    post tasks_url params: { task: {title: title, deadline: Time.now, owner_id: @user.id}}, format: :json
+
+    assert_response :success
+    assert_equal title, response.parsed_body["title"]
   end
 
   test "should create task" do
